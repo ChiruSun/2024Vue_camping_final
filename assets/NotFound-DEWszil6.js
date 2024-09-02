@@ -1,1 +1,0 @@
-import{u as o,l as s,c as n,o as c,a as e}from"./index-DmjZMpo1.js";const a=e("h1",null,"404找不到頁面",-1),r=e("p",{class:"text-center"},"3秒後跳轉回首頁",-1),u=[a,r],i={__name:"NotFound",setup(_){const t=o();return s(()=>{setTimeout(()=>{t.push("/")},3e3)}),(l,d)=>(c(),n("div",null,u))}};export{i as default};
