@@ -68,7 +68,7 @@ async function PostAddTodo() {
     }
     return
   } else {
-    return
+    alert('請輸入代辦事項')
   }
 }
 

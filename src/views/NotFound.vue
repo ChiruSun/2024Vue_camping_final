@@ -11,7 +11,7 @@ onMounted(() => {
 </script>
 <template>
   <div>
-    <h1>404找不到頁面</h1>
+    <h1 class="text-center">404找不到頁面</h1>
     <p class="text-center">3秒後跳轉回首頁</p>
   </div>
 </template>

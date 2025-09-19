@@ -59,6 +59,23 @@ const goSignIn = () => {
   router.push('/')
 }
 
+//transition
+const SignUpBeforeEnter = (e) => {
+  e.style.opacity = 0
+  e.style.transform = 'translateX(50px)'
+}
+const SignUpEnter = (e, done) => {
+  const delay = e.dataset.index * 100
+  console.log(e)
+
+  setTimeout(() => {
+    e.style.transition = 'opacity 0.3s,transform 0.3s ease-out'
+    e.style.opacity = 1
+    e.style.transform = 'translateX(0)'
+    done()
+  }, delay)
+}
+
 const postSignUpData = () => {
   const dataExist = Object.values(signUpUserData.value).every((x) => x)
 
@@ -113,30 +130,26 @@ const postSignUpData = () => {
 <template>
   <div class="d-flex flex-column side-width p-4">
     <h1 class="h4 fw-bold mb-4">註冊帳號</h1>
-    <!-- <div class="mb-3">
-      <label for="mail" class="form-label fw-bold">Email</label>
-      <input
-        id="mail"
-        type="email"
-        class="form-control"
-        v-model="signUpUserData.email"
-        @blur="emailBlur"
-      />
-      <p v-if="emailMsg" class="fw-bold emailMsg">{{ emailMsg }}</p>
-    </div> -->
     <div class="mb-3">
-      <div v-for="(value, property) in signUpUserData" :key="property" class="mb-3">
-        <label :for="property" class="form-label fw-bold">{{ labelName(property) }}</label>
-        <input
-          :id="property"
-          :placeholder="placeholder(property)"
-          :type="typePart(property)"
-          class="form-control px-3 py-2 mb-1"
-          v-model="signUpUserData[property]"
-          @blur="inputBlur(property)"
-        />
-        <p v-if="message[property]" class="fw-bold msgStyle">{{ message[property] }}</p>
-      </div>
+      <transition-group appear @before-enter="SignUpBeforeEnter" @enter="SignUpEnter">
+        <div
+          v-for="(value, property, index) in signUpUserData"
+          :key="property"
+          :data-index="index"
+          class="mb-3"
+        >
+          <label :for="property" class="form-label fw-bold">{{ labelName(property) }}</label>
+          <input
+            :id="property"
+            :placeholder="placeholder(property)"
+            :type="typePart(property)"
+            class="form-control px-3 py-2 mb-1"
+            v-model="signUpUserData[property]"
+            @blur="inputBlur(property)"
+          />
+          <p v-if="message[property]" class="fw-bold msgStyle">{{ message[property] }}</p>
+        </div>
+      </transition-group>
     </div>
 
     <div class="d-flex flex-column justify-content-center align-items-center">

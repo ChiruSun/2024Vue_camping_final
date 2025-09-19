@@ -2,7 +2,7 @@
 import './assets/all.scss'
 
 import { createApp } from 'vue'
-import App from './AppMain.vue'
+import App from './AppTwo.vue'
 import router from './router'
 
 const app = createApp(App)

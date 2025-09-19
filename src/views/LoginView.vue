@@ -42,6 +42,23 @@ const inputBlur = (property) => {
   }
 }
 
+//transition
+const loginBeforeEnter = (e) => {
+  e.style.opacity = 0
+  e.style.transform = 'translateX(50px)'
+}
+const loginEnter = (e, done) => {
+  const delay = e.dataset.index * 100
+  console.log(e)
+
+  setTimeout(() => {
+    e.style.transition = 'opacity 0.3s,transform 0.3s ease-out'
+    e.style.opacity = 1
+    e.style.transform = 'translateX(0)'
+    done()
+  }, delay)
+}
+
 const postSignInData = () => {
   if (signInUserData.value.email && signInUserData.value.password) {
     async function axiosPost() {
@@ -87,32 +104,28 @@ const postSignInData = () => {
 </script>
 
 <template>
-  <div class="d-flex flex-column justify-content-center side-width p-4">
-    <h1 class="h4 fw-bold mb-4">最實用的線上代辦事項服務</h1>
-    <!-- <div class="mb-3">
-      <label for="mail" class="form-label fw-bold">Email</label>
-      <input
-        id="mail"
-        type="email"
-        class="form-control"
-        v-model="signInUserData.email"
-        @blur="emailBlur"
-      />
-      <p v-if="emailMsg" class="fw-bold emailMsg">{{ emailMsg }}</p>
-    </div> -->
-    <div v-for="(value, property) in signInUserData" :key="property" class="mb-3">
-      <label :for="property" class="form-label fw-bold">{{ labelName(property) }}</label>
-      <input
-        :id="property"
-        :type="typePart(property)"
-        :placeholder="`請輸入${labelName(property)}`"
-        class="form-control px-3 py-2 mb-1"
-        v-model="signInUserData[property]"
-        @blur="inputBlur(property)"
-      />
-      <p v-if="message[property]" class="fw-bold msgStyle">{{ message[property] }}</p>
-    </div>
-    <div class="d-flex flex-column justify-content-center align-items-center mt-2">
+  <div class="p-4">
+    <h1 class="h4 fw-bold mb-4 text-nowrap">最實用的線上代辦事項服務</h1>
+    <transition-group appear @before-enter="loginBeforeEnter" @enter="loginEnter">
+      <div
+        v-for="(value, property, index) in signInUserData"
+        :key="property"
+        :data-index="index"
+        class="mb-3"
+      >
+        <label :for="property" class="form-label fw-bold">{{ labelName(property) }}</label>
+        <input
+          :id="property"
+          :type="typePart(property)"
+          :placeholder="`請輸入${labelName(property)}`"
+          class="form-control px-3 py-2 mb-1"
+          v-model="signInUserData[property]"
+          @blur="inputBlur(property)"
+        />
+        <p v-if="message[property]" class="fw-bold msgStyle">{{ message[property] }}</p>
+      </div>
+    </transition-group>
+    <div class="d-flex flex-column justify-content-center align-items-center mt-6">
       <button type="button" class="btn btn-dark px-5 mb-3 fw-bold" @click="postSignInData">
         登入
       </button>
@@ -125,5 +138,8 @@ const postSignInData = () => {
   color: #d87355;
   font-size: 14px;
   margin-bottom: 0;
+}
+.side-width {
+  width: 336px;
 }
 </style>

@@ -1,19 +1,22 @@
 import { createRouter, createWebHistory, createWebHashHistory } from 'vue-router'
-import LoginView from '@/views/LoginView.vue'
+import SignView from '@/views/SignView.vue'
 
 const router = createRouter({
   history: createWebHashHistory(import.meta.env.BASE_URL),
   routes: [
     {
       path: '/',
-      name: 'homeLogin',
-      component: LoginView
+      component: SignView,
+      children: [
+        { path: '', component: () => import('../views/LoginView.vue') },
+        {
+          path: '/signup',
+          name: 'signup',
+          component: () => import('../views/SignUpView.vue')
+        }
+      ]
     },
-    {
-      path: '/signup',
-      name: 'signup',
-      component: () => import('../views/SignUpView.vue')
-    },
+
     {
       path: '/todopage',
       name: 'todopage',
