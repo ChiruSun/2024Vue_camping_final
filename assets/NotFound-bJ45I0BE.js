@@ -1,0 +1,1 @@
+import{u as s,k as o,c,o as n,b as e}from"./index-B3dQPVuJ.js";const a=e("h1",{class:"text-center"},"404找不到頁面",-1),r=e("p",{class:"text-center"},"3秒後跳轉回首頁",-1),_=[a,r],i={__name:"NotFound",setup(u){const t=s();return o(()=>{setTimeout(()=>{t.push("/")},3e3)}),(d,l)=>(n(),c("div",null,_))}};export{i as default};
